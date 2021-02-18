@@ -1,4 +1,4 @@
-# Supplemental analysis for ambient wind observability paper
+# Supplement for ambient wind observability paper
 
 <b>Title</b>: A nonlinear observability analysis of ambient wind estimation with uncalibrated sensors, inspired by insect neural encoding
 
