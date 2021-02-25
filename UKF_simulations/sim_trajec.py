@@ -175,6 +175,29 @@ def get_many_turns_dynamic_wind(turns=200, Lsec=None):
     
     return df
 
+def get_many_turns_dynamic_wind_three(turns=200, Lsec=None):
+    dt = 0.01
+    if Lsec is None:
+        Lsec = turns # sec
+    n_heading_changes = turns+1
+    
+    zeta = np.pi/2.
+    #headings = [zeta - 0.9*np.pi/2., zeta + 0.9*np.pi/2., zeta]*int(np.ceil(turns/3.))
+    headings = [-np.pi/2.5, np.pi/2.5, 0]*int(np.ceil(turns/3.))
+    
+    t = np.arange(0, Lsec, dt)
+    Lf = len(t) # frames
+
+    x0 = [0.542061360272459, -1.5107554743297094, -0.7094850253100653, 0.005134773205195395, 0.5, zeta]
+
+    solver = Solver(time_max=Lsec, n_heading_changes=n_heading_changes, headings=headings)
+    sol = odeint(solver.fly_diffeq_dynamic_wind, x0, t)
+    df = data_to_pandas(sol, solver, t)
+    #df.to_hdf('twohundred_turns_dynamic_wind.hdf', 'twohundred_turns_dynamic_wind')
+    #scipy.io.savemat('twentyone_turns.mat', {name: col.values for name, col in df.items()})
+    
+    return df
+
 
 if __name__ == '__main__':
 
